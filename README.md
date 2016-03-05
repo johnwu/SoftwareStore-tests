@@ -11,15 +11,15 @@ Update config.json
 ```js
 {
     // Base url of Wordpress site
-    "URL": "http://secure.sparkbooth.com/staging",
+    "URL": "http://yourwebsitehere.com",
 
     // Test product properties
-    "PRODUCT_ID": "TESTER",
-    "PRODUCT_SECRET": "TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST",
+    "PRODUCT_ID": "YOUR_PRODUCT_ID_HERE",
+    "PRODUCT_SECRET": "YOUR_PRODUCT_SECRET_KEY_HERE",
     
     // Test product license
-    "LICENSE_EMAIL": "john+staging@sparkbooth.com",
-    "LICENSE_KEY": "test-d70b7e3f-4aac-4fd9-9ae5-e0ec47d49818"
+    "LICENSE_EMAIL": "your@email.here",
+    "LICENSE_KEY": "YOUR_LICENSE_KEY_HERE"
 }
 ```
 To run tests
