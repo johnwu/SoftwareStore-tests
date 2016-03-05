@@ -1,0 +1,17 @@
+{
+  "name": "softwarestore-tests",
+  "version": "1.0.0",
+  "description": "Tests for Wordpress jigoshop-software plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "John Wu",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "md5": "^2.0.0",
+    "nconf": "^0.8.4",
+    "supertest": "^1.2.0"
+  }
+}
