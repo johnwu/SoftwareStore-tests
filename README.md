@@ -4,10 +4,8 @@ This node project is a set of Mocha tests for the [JigoShop Software Add-On](htt
 
 Requires [Mocha](https://github.com/mochajs/mocha) package
 
-```js
-npm install mocha -g
+    npm install mocha -g
 
-```
 Update config.json
 
 ```js
@@ -24,4 +22,6 @@ Update config.json
     "LICENSE_KEY": "test-d70b7e3f-4aac-4fd9-9ae5-e0ec47d49818"
 }
 ```
+To run tests
 
+    mocha
