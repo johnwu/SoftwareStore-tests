@@ -38,7 +38,7 @@ describe('Trial API', function () {
             });
     });
 
-    it('get trial for fake product', function (done) {
+    it('get trial for non-existant product', function (done) {
         var nounce = Math.random().toString(36).substr(2, 10);
         request.post('/api?request=trial')
             .field(constants.PARAM_PRODUCTID, 'I_DONT_EXISTS')

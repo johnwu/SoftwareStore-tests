@@ -40,7 +40,7 @@ describe('Activation API', function () {
             });        
     });
 
-    it('active product', function (done) {
+    it('activate product', function (done) {
         var nounce = Math.random().toString(36).substr(2, 10);
         request.post('/api?request=activation')
             .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
@@ -101,6 +101,7 @@ describe('Activation API', function () {
                 assert(result.hasOwnProperty('code') && result.code === '103', 'code is 103');
                 assert(result.hasOwnProperty('error') && result.error === 'Exceeded maximum number of activations', 'error is Exceeded maximum number of activations');
                 assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
                 //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
                 done();
             });
@@ -140,12 +141,78 @@ describe('Activation API', function () {
                 var result = res.body;
                 //console.log(res.body);
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
-                assert(result.hasOwnProperty('activated'), 'has activated');
                 assert(result.hasOwnProperty('code') && result.code === '102', 'code is 102');
                 assert(result.hasOwnProperty('error') && result.error === 'Software has been deactivated', 'error is Software has been deactivated');
                 assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
                 //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
                 instanceid = result.instanceid;
+                done();
+            });
+    });
+
+    it('activate wrong product', function (done) {
+        var nounce = Math.random().toString(36).substr(2, 10);
+        request.post('/api?request=activation')
+            .field(constants.PARAM_PRODUCTID, 'WRONG_PRODUCT_ID')
+            .field(constants.PARAM_EMAIL, nconf.get('LICENSE_EMAIL'))
+            .field(constants.PARAM_LICENSEKEY, nconf.get('LICENSE_KEY'))
+            .field(constants.PARAM_NONCE, nounce)
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function (err, res) {
+                var result = res.body;
+                //console.log(res.body);
+                assert(result.hasOwnProperty('timestamp'), 'has timestamp');
+                assert(result.hasOwnProperty('code') && result.code === '106', 'code is 106');
+                assert(result.hasOwnProperty('error') && result.error === 'License key for different product. Please check the product for this license key, then download and install the correct product.', 'error is License key for different product. Please check the product for this license key, then download and install the correct product.');
+                assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
+                //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                done();
+            });
+    });
+
+    it('activate with bad email', function (done) {
+        var nounce = Math.random().toString(36).substr(2, 10);
+        request.post('/api?request=activation')
+            .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
+            .field(constants.PARAM_EMAIL, nconf.get('LICENSE_EMAIL') + '.baddomain')
+            .field(constants.PARAM_LICENSEKEY, nconf.get('LICENSE_KEY'))
+            .field(constants.PARAM_NONCE, nounce)
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function (err, res) {
+                var result = res.body;
+                //console.log(res.body);
+                assert(result.hasOwnProperty('timestamp'), 'has timestamp');
+                assert(result.hasOwnProperty('code') && result.code === '101', 'code is 101');
+                assert(result.hasOwnProperty('error') && result.error === 'Invalid License Key', 'error is Invalid License Key');
+                assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
+                //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                done();
+            });
+    });
+
+    it('activate with bad license key', function (done) {
+        var nounce = Math.random().toString(36).substr(2, 10);
+        request.post('/api?request=activation')
+            .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
+            .field(constants.PARAM_EMAIL, nconf.get('LICENSE_EMAIL'))
+            .field(constants.PARAM_LICENSEKEY, nconf.get('LICENSE_KEY') + 'BAD')
+            .field(constants.PARAM_NONCE, nounce)
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function (err, res) {
+                var result = res.body;
+                //console.log(res.body);
+                assert(result.hasOwnProperty('timestamp'), 'has timestamp');
+                assert(result.hasOwnProperty('code') && result.code === '101', 'code is 101');
+                assert(result.hasOwnProperty('error') && result.error === 'Invalid License Key', 'error is Invalid License Key');
+                assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
+                //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
                 done();
             });
     });
