@@ -118,7 +118,7 @@ describe('Activation API', function () {
             .expect('Content-Type', 'application/json')
             .end(function (err, res) {
                 var result = res.body;
-                console.log(res.body);
+                //console.log(res.body);
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
                 assert(result.hasOwnProperty('reset') && result.reset === true, 'reset is true');
                 assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');

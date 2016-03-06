@@ -28,7 +28,7 @@ describe('Trial API', function () {
             .expect('Content-Type', 'application/json')
             .end(function (err, res) {
                 var result = res.body;
-                console.log('trial request response', res.body);
+                //console.log('trial request response', res.body);
                 assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'trail request has valid signature');
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
                 assert(result.hasOwnProperty('units') && result.units === 'days', 'units is days');
@@ -47,7 +47,7 @@ describe('Trial API', function () {
             .expect('Content-Type', 'application/json')
             .end(function (err, res) {
                 var result = res.body;
-                console.log('fake product trial request response', res.body);
+                //console.log('fake product trial request response', res.body);
                 assert(result.hasOwnProperty('error') && result.error === 'Invalid Request', 'error is Invalid Request');
                 assert(result.hasOwnProperty('code') && result.code === '100', 'code is 100');
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
