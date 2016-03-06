@@ -22,6 +22,6 @@ Update config.json
     "LICENSE_KEY": "YOUR_LICENSE_KEY_HERE"
 }
 ```
-To run tests
+To run tests, open command line at root of project folder and enter
 
     mocha
