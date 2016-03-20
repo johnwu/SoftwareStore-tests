@@ -216,4 +216,26 @@ describe('Activation API', function () {
                 done();
             });
     });
+
+    it('activate with upgraded license key', function (done) {
+        var nounce = Math.random().toString(36).substr(2, 10);
+        request.post('/api?request=activation')
+            .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
+            .field(constants.PARAM_EMAIL, nconf.get('UPGRADED_LICENSE_EMAIL'))
+            .field(constants.PARAM_LICENSEKEY, nconf.get('UPGRADED_LICENSE_KEY'))
+            .field(constants.PARAM_NONCE, nounce)
+            .expect(200)
+            .expect('Content-Type', 'application/json')
+            .end(function (err, res) {
+                var result = res.body;
+                //console.log(res.body);
+                assert(result.hasOwnProperty('timestamp'), 'has timestamp');
+                assert(result.hasOwnProperty('code') && result.code === '105', 'code is 105');
+                assert(result.hasOwnProperty('error') && result.error === 'Purchase has been upgraded', 'error is Purchase has been upgraded');
+                assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
+                //signature is incorect for error response
+                //assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                done();
+            });
+    });
 });

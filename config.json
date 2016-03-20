@@ -3,5 +3,7 @@
     "PRODUCT_ID": "TESTER",
     "PRODUCT_SECRET": "TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST",
     "LICENSE_EMAIL": "john+staging@sparkbooth.com",
-    "LICENSE_KEY": "test-d70b7e3f-4aac-4fd9-9ae5-e0ec47d49818"
+    "LICENSE_KEY": "test-d70b7e3f-4aac-4fd9-9ae5-e0ec47d49818",
+    "UPGRADED_LICENSE_EMAIL": "john+staging@sparkbooth.com",
+    "UPGRADED_LICENSE_KEY": "test-a1f2a567-cbcd-4b96-b8e4-106f9c86128e"
 }
