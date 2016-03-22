@@ -29,7 +29,7 @@ describe('Trial API', function () {
             .end(function (err, res) {
                 var result = res.body;
                 //console.log('trial request response', res.body);
-                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'trail request has valid signature');
+                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'trail request has valid signature '  + res.body.sig);
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
                 assert(result.hasOwnProperty('units') && result.units === 'days', 'units is days');
                 assert(result.hasOwnProperty('duration') && result.duration === '1', 'duration is 1');

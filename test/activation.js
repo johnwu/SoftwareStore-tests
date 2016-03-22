@@ -35,7 +35,7 @@ describe('Activation API', function () {
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
                 assert(result.hasOwnProperty('reset') && result.reset === true, 'reset is true');
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
-                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature ' + res.body.sig);
                 done();
             });        
     });
@@ -56,13 +56,14 @@ describe('Activation API', function () {
                 assert(result.hasOwnProperty('activated'), 'has activated');
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
                 assert(result.hasOwnProperty('instanceid') && result.instanceid.length > 0, 'has instanceid');
-                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature ' + res.body.sig);
                 instanceid = result.instanceid;
                 done();
             });
     });
 
     it('validate existing activation', function (done) {
+        assert(instanceid, "has instance id " + instanceid);
         var nounce = Math.random().toString(36).substr(2, 10);
         request.post('/api?request=activation')
             .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
@@ -79,7 +80,7 @@ describe('Activation API', function () {
                 assert(result.hasOwnProperty('activated'), 'has activated');
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
                 assert(result.hasOwnProperty('instanceid') && result.instanceid === instanceid, 'has same instanceid');
-                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature ' + res.body.sig);
                 instanceid = result.instanceid;
                 done();
             });
@@ -108,6 +109,7 @@ describe('Activation API', function () {
     });
 
     it('deactivate install', function (done) {
+        assert(instanceid, "has instance id " + instanceid);
         var nounce = Math.random().toString(36).substr(2, 10);
         request.post('/api?request=deactivation')
             .field(constants.PARAM_PRODUCTID, nconf.get('PRODUCT_ID'))
@@ -122,7 +124,7 @@ describe('Activation API', function () {
                 //console.log(res.body);
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
                 assert(result.hasOwnProperty('reset') && result.reset === true, 'reset is true');
-                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature');
+                assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature ' + res.body.sig);
                 done();
             });
     });
