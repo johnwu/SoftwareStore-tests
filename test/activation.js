@@ -11,7 +11,9 @@ describe('Activation API', function () {
 
     var request,
         instanceid;
-    
+
+    this.timeout(10000);
+
     before(function () {
         nconf.env().file({
             file: 'config.json'
@@ -54,6 +56,7 @@ describe('Activation API', function () {
                 //console.log(res.body);
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
                 assert(result.hasOwnProperty('activated'), 'has activated');
+                assert(result.activated === true, 'Activation successful');
                 assert(result.hasOwnProperty(constants.PARAM_NONCE) && result[constants.PARAM_NONCE] === nounce, 'nounce matches');
                 assert(result.hasOwnProperty('instanceid') && result.instanceid.length > 0, 'has instanceid');
                 assert(signature.validate(result, nconf.get('PRODUCT_SECRET')), 'activation request has valid signature ' + res.body.sig);
@@ -232,7 +235,7 @@ describe('Activation API', function () {
                 var result = res.body;
                 //console.log(res.body);
                 assert(result.hasOwnProperty('timestamp'), 'has timestamp');
-                assert(result.hasOwnProperty('code') && result.code === '105', 'code is 105');
+                assert(result.hasOwnProperty('code') && result.code === '105', 'code is 105 but returned ' + result.code);
                 assert(result.hasOwnProperty('error') && result.error === 'Purchase has been upgraded', 'error is Purchase has been upgraded');
                 assert(result.hasOwnProperty('activated') && result.activated === false, 'activated is false');
                 //signature is incorect for error response

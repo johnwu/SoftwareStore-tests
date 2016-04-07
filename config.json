@@ -2,8 +2,10 @@
     "URL": "http://secure.sparkbooth.com/staging",
     "PRODUCT_ID": "TESTER",
     "PRODUCT_SECRET": "TEST-TEST-TEST-TEST-TEST-TEST-TEST-TEST",
-    "LICENSE_EMAIL": "john+staging@sparkbooth.com",
+    "LICENSE_EMAIL": "john+staging1@sparkbooth.com",
     "LICENSE_KEY": "test-d70b7e3f-4aac-4fd9-9ae5-e0ec47d49818",
-    "UPGRADED_LICENSE_EMAIL": "john+staging@sparkbooth.com",
-    "UPGRADED_LICENSE_KEY": "test-a1f2a567-cbcd-4b96-b8e4-106f9c86128e"
+    "UPGRADED_LICENSE_EMAIL": "john+staging2@sparkbooth.com",
+    "UPGRADED_LICENSE_KEY": "test-a1f2a567-cbcd-4b96-b8e4-106f9c86128e",
+    "REFUNDED_LICENSE_EMAIL": "john+staging3@sparkbooth.com",
+    "REFUNDED_LICENSE_KEY": "test-ee8c1f7e-e311-4a17-8cd7-fae8c90916a4"
 }
